@@ -1,271 +1,109 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SMOU GROUP | Video</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SMOU GROUP | Video</title>
 
-  <style>
-    :root{
-      --glass: rgba(255,255,255,.10);
-      --glass2: rgba(255,255,255,.16);
-      --border: rgba(255,255,255,.22);
-      --text:#ffffff;
-      --muted: rgba(255,255,255,.80);
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
-      --accent: rgba(40,150,255,.55);
-      --accent2: rgba(17,120,214,.35);
-    }
+<style>
+body{
+    margin:0;
+    font-family:Tajawal, sans-serif;
+    background:#0a0f17;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    color:#fff;
+}
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: "Tajawal","Cairo",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-      background:#0a0f17;
-      color:var(--text);
-    }
+/* إطار زجاجي واضح */
+.video-frame{
+    width:380px;
+    aspect-ratio:9/16;
+    border-radius:28px;
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(14px);
+    box-shadow:0 25px 60px rgba(0,0,0,.45);
+    position:relative;
+    cursor:pointer;
+    transition:.3s;
+}
+.video-frame:hover{
+    transform:scale(1.02);
+}
 
-    /* ======= TOP BAR ======= */
-    .topbar{
-      position:fixed;
-      inset:0 0 auto 0;
-      height:74px;
-      display:flex;
-      align-items:center;
-      z-index:50;
-      background: rgba(10, 20, 33, .42);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
+/* صورة الغلاف */
+.video-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
 
-    .wrap{
-      width:min(1200px, 92vw);
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      gap:16px;
-    }
+/* زر تشغيل في المنتصف */
+.play-btn{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 260px;
-    }
-    .brand img{
-      height:44px;
-      width:auto;
-      display:block;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
-    }
-    .brand-text{
-      display:flex;
-      flex-direction:column;
-      line-height:1.05;
-      white-space:nowrap;
-    }
-    .brand-text strong{
-      font-size:15px;
-      font-weight:1000;
-      letter-spacing:.6px;
-    }
-    .brand-text span{
-      font-size:13px;
-      opacity:.82;
-      font-weight:800;
-      margin-top:2px;
-    }
+.play-circle{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:rgba(0,0,0,.6);
+    border:2px solid rgba(255,255,255,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
-    .actions{
-      flex:1;
-      display:flex;
-      justify-content:flex-end;
-      align-items:center;
-      gap:10px;
-    }
+.play-circle:after{
+    content:"";
+    border-left:22px solid #fff;
+    border-top:14px solid transparent;
+    border-bottom:14px solid transparent;
+    margin-left:6px;
+}
 
-    /* زر زجاجي مثل موقعك */
-    .btn{
-      appearance:none;
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
-      color:#fff;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-weight: 1000;
-      font-size: 15px;
-      cursor:pointer;
-      transition: .2s ease;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      user-select:none;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.10));
-      border-color: rgba(255,255,255,.40);
-    }
-    .btn.primary{
-      border-color: var(--accent);
-      background: linear-gradient(180deg, var(--accent2), rgba(255,255,255,.10));
-    }
-    .btn .dot-i{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(255,255,255,.85);
-      box-shadow: 0 0 0 6px rgba(255,255,255,.12);
-    }
-
-    /* ======= HERO BACKGROUND ======= */
-    .hero{
-      min-height: 100vh;
-      display:grid;
-      place-items:center;
-      position:relative;
-      overflow:hidden;
-      padding-top:74px; /* مساحة للتوب بار */
-    }
-
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: url("back.png") center/cover no-repeat;
-      transform: scale(1.03);
-      filter: saturate(1.08) contrast(1.08);
-      z-index:0;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1200px 600px at 75% 40%, rgba(12,110,210,.30), transparent 60%),
-        linear-gradient(90deg, rgba(5,10,18,.86) 0%, rgba(5,10,18,.56) 45%, rgba(5,10,18,.25) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.55) 100%);
-      z-index:1;
-    }
-
-    .content{
-      position:relative;
-      z-index:2;
-      width:min(900px, 92vw);
-      text-align:center;
-      padding: 40px 0 70px;
-    }
-
-    h1{
-      margin: 0 0 10px;
-      font-size: clamp(28px, 4vw, 46px);
-      line-height:1.15;
-      text-shadow: 0 20px 60px rgba(0,0,0,.35);
-    }
-    p{
-      margin: 0 0 18px;
-      color: var(--muted);
-      line-height:1.9;
-      font-size: 15px;
-    }
-
-    .videoBox{
-      margin-top:22px;
-      display:none;
-      border-radius: 26px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-    }
-
-    /* Shorts أفضل بنسبة 9:16 */
-    .videoWrap{
-      position:relative;
-      width: min(420px, 90vw);
-      aspect-ratio: 9 / 16;
-      margin: 0 auto;
-      background: rgba(0,0,0,.25);
-    }
-    iframe{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-    }
-
-    /* زر رجوع بسيط */
-    .backLink{
-      margin-top:16px;
-      display:inline-block;
-      color:rgba(255,255,255,.85);
-      text-decoration:none;
-      font-weight:900;
-      opacity:.9;
-    }
-    .backLink:hover{ opacity:1; }
-
-  </style>
+/* iframe بعد التشغيل */
+.video-frame iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
+</style>
 </head>
 
 <body>
-  <!-- TOP BAR -->
-  <header class="topbar">
-    <div class="wrap">
-      <div class="brand">
-        <img src="logo.png" alt="SMOU GROUP" />
-        <div class="brand-text">
-          <strong>SMOU GROUP</strong>
-          <span>مجموعة سمو</span>
-        </div>
-      </div>
 
-      <div class="actions">
-        <a class="btn" href="https://smougroup.com"><span class="dot-i"></span> الرئيسية</a>
-      </div>
+<div class="video-frame" onclick="playVideo()" id="videoBox">
+    
+    <!-- صورة غلاف تلقائية من يوتيوب -->
+    <img src="https://img.youtube.com/vi/Cow1xpKGi6M/maxresdefault.jpg">
+
+    <div class="play-btn">
+        <div class="play-circle"></div>
     </div>
-  </header>
 
-  <!-- HERO -->
-  <main class="hero">
-    <div class="content">
-      <h1>فيديو سمو الرسمي</h1>
-      <p>الفيديو غير مدرج (Unlisted) — ويظهر هنا فقط بعد الضغط على زر المشاهدة.</p>
+</div>
 
-      <button class="btn primary" type="button" onclick="showVideo()">
-        <span class="dot-i"></span> مشاهدة الفيديو
-      </button>
+<script>
+function playVideo(){
+    document.getElementById("videoBox").innerHTML = `
+        <iframe 
+        src="https://www.youtube.com/embed/Cow1xpKGi6M?autoplay=1&rel=0&modestbranding=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+        </iframe>
+    `;
+}
+</script>
 
-      <div class="videoBox" id="videoBox">
-        <div class="videoWrap">
-          <!-- فيديو Shorts: ID = Cow1xpKGi6M -->
-          <iframe
-            src="https://www.youtube.com/embed/Cow1xpKGi6M"
-            title="SMOU Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-
-      <a class="backLink" href="https://smougroup.com">← رجوع إلى الموقع الرئيسي</a>
-    </div>
-  </main>
-
-  <script>
-    function showVideo(){
-      const box = document.getElementById('videoBox');
-      box.style.display = 'block';
-      // سكرول خفيف للفيديو
-      box.scrollIntoView({behavior:'smooth', block:'start'});
-    }
-  </script>
 </body>
 </html>

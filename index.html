@@ -1,505 +1,215 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SMOU GROUP | فيديوهات الفضي</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SMOU GROUP | فيديوهات الفضي</title>
 
-  <!-- خط عربي (اختياري) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg1:#050b14;
-      --bg2:#0a1c33;
-      --glass: rgba(255,255,255,.08);
-      --glass2: rgba(255,255,255,.12);
-      --border: rgba(255,255,255,.18);
-      --text: #ffffff;
-      --muted: rgba(255,255,255,.78);
-      --shadow: 0 24px 70px rgba(0,0,0,.55);
-      --accent: rgba(40,150,255,.55);
-      --accent2: rgba(40,150,255,.20);
-      --radius: 18px;
-    }
+<style>
+:root{
+  --bg1:#050b14;
+  --bg2:#0a1c33;
+  --glass: rgba(255,255,255,.08);
+  --border: rgba(255,255,255,.18);
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.75);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Tajawal",sans-serif;
+  color:var(--text);
+  background:
+  radial-gradient(800px 400px at 20% 20%, rgba(0,150,255,.15), transparent 60%),
+  linear-gradient(180deg,var(--bg1),var(--bg2));
+  min-height:100vh;
+}
+.wrap{max-width:1100px;margin:auto;padding:20px}
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: "Tajawal", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-      color:var(--text);
-      min-height:100vh;
-      background:
-        radial-gradient(900px 500px at 15% 15%, rgba(40,150,255,.22), transparent 60%),
-        radial-gradient(800px 500px at 85% 30%, rgba(0,255,200,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x:hidden;
-    }
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--glass);
+  border:1px solid var(--border);
+  padding:14px;
+  border-radius:18px;
+  backdrop-filter:blur(14px);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:45px}
+.pageTitle{text-align:center}
+.pageTitle h1{margin:0;font-size:18px}
+.branch{font-size:12px;color:var(--muted)}
 
-    /* خلفية صورة (اختياري) */
-    .bg-media{
-      position:fixed; inset:0;
-      background:
-        url("back.webp") center/cover no-repeat,
-        url("back.jpg") center/cover no-repeat,
-        url("back.png") center/cover no-repeat;
-      opacity:.12;
-      filter:saturate(1.05) contrast(1.05);
-      pointer-events:none;
-    }
-    .bg-overlay{
-      position:fixed; inset:0;
-      background: linear-gradient(180deg, rgba(5,11,20,.88), rgba(10,28,51,.92));
-      pointer-events:none;
-    }
+.card{
+  margin-top:20px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  backdrop-filter:blur(14px);
+}
 
-    .wrap{
-      position:relative;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 26px 16px 40px;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:16px;
+}
 
-    /* الهيدر */
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding: 14px 14px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--glass2), var(--glass));
-      backdrop-filter: blur(14px);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-    }
+.videoIcon{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.3s;
+}
+.videoIcon:hover{transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,0,0,.4);}
+.videoIcon img{
+  width:100%;
+  aspect-ratio:9/16;
+  object-fit:cover;
+}
+.caption{
+  padding:10px;
+  text-align:center;
+  font-weight:700;
+}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 200px;
-    }
+.playerWrap{display:none;margin-top:20px}
+.playerBox{
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.playerTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+  background:rgba(255,255,255,.06);
+}
+iframe{
+  width:100%;
+  aspect-ratio:9/16;
+  border:0;
+}
 
-    .brand img{
-      width:48px;
-      height:48px;
-      border-radius: 14px;
-      object-fit:contain;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.16);
-      padding:6px;
-    }
-
-    .brand .t1{
-      font-weight:800;
-      letter-spacing:.2px;
-      font-size:16px;
-      line-height:1.2;
-    }
-    .brand .t2{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:2px;
-    }
-
-    .pageTitle{
-      text-align:center;
-      flex:1;
-    }
-    .pageTitle h1{
-      margin:0;
-      font-size:18px;
-      font-weight:800;
-    }
-    .pageTitle p{
-      margin:4px 0 0;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .pill{
-      min-width: 200px;
-      display:flex;
-      justify-content:flex-end;
-    }
-    .branch{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color: var(--muted);
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .dot{
-      width:8px; height:8px;
-      border-radius:50%;
-      background: rgba(40,150,255,.9);
-      box-shadow: 0 0 0 6px rgba(40,150,255,.18);
-    }
-
-    /* الكارد الرئيسي */
-    .card{
-      margin-top: 16px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      backdrop-filter: blur(14px);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .cardHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding: 14px 14px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
-
-    .hint{
-      font-size:12px;
-      color: var(--muted);
-    }
-
-    .btn{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      color:#fff;
-      padding: 10px 12px;
-      border-radius: 14px;
-      cursor:pointer;
-      font-weight:700;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      transition:.2s;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
-    .btn:active{ transform: translateY(0px); }
-
-    .btnPrimary{
-      border-color: rgba(40,150,255,.35);
-      background: linear-gradient(180deg, rgba(40,150,255,.22), rgba(40,150,255,.12));
-    }
-
-    /* شبكة الأيقونات */
-    .grid{
-      padding: 14px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:12px;
-    }
-
-    @media (min-width:720px){
-      .grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
-
-    .videoIcon{
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      border-radius: 18px;
-      overflow:hidden;
-      cursor:pointer;
-      transition:.22s;
-      position:relative;
-    }
-    .videoIcon:hover{ transform: translateY(-3px); box-shadow: 0 18px 45px rgba(0,0,0,.35); }
-    .thumb{
-      width:100%;
-      aspect-ratio: 16/10;
-      object-fit:cover;
-      display:block;
-      filter:saturate(1.05) contrast(1.05);
-    }
-    .caption{
-      padding:10px 10px 12px;
-      font-weight:800;
-      font-size:13px;
-      line-height:1.25;
-    }
-    .subcap{
-      padding:0 10px 12px;
-      margin-top:-8px;
-      color: var(--muted);
-      font-size:11px;
-    }
-
-    /* زر play فوق الصورة */
-    .playBadge{
-      position:absolute;
-      top:10px; left:10px;
-      width:38px; height:38px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.22);
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .playBadge:after{
-      content:"";
-      border-left: 12px solid #fff;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      margin-left:2px;
-    }
-
-    /* شاشة التشغيل */
-    .playerWrap{
-      padding:14px;
-      display:none;
-    }
-    .playerBox{
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      border-radius: 24px;
-      overflow:hidden;
-      box-shadow: 0 18px 55px rgba(0,0,0,.45);
-    }
-    .playerTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-    }
-    .playerTitle{
-      font-weight:900;
-      font-size:14px;
-      line-height:1.3;
-    }
-    .playerTitle span{
-      display:block;
-      font-weight:600;
-      color: var(--muted);
-      font-size:12px;
-      margin-top:2px;
-    }
-    .iframeBox{
-      width:100%;
-      aspect-ratio: 16/9;
-      background: rgba(0,0,0,.35);
-    }
-    .iframeBox iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      display:block;
-    }
-
-    /* فوتر بسيط */
-    .footer{
-      margin-top: 14px;
-      text-align:center;
-      color: rgba(255,255,255,.55);
-      font-size:12px;
-    }
-
-  </style>
+button{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+  padding:6px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+button:hover{background:rgba(255,255,255,.25)}
+</style>
 </head>
 
 <body>
-  <div class="bg-media"></div>
-  <div class="bg-overlay"></div>
+<div class="wrap">
 
-  <div class="wrap">
-
-    <!-- الهيدر -->
-    <div class="topbar">
-      <div class="brand">
-        <!-- ضع ملف الشعار داخل نفس المجلد باسم logo.png أو غيّر المسار -->
-        <img src="logo.png" alt="SMOU GROUP">
-        <div>
-          <div class="t1">SMOU GROUP</div>
-          <div class="t2">Silver Cabin</div>
-        </div>
-      </div>
-
-      <div class="pageTitle">
-        <h1>فيديوهات الفضي</h1>
-        <p>اضغط على الأيقونة لتشغيل الفيديو داخل نفس الصفحة</p>
-      </div>
-
-      <div class="pill">
-        <!-- اسم الفرع: عدّله كما تريد -->
-        <div class="branch"><span class="dot"></span>فرع الشارقة</div>
-      </div>
+<div class="topbar">
+  <div class="brand">
+    <img src="logo.png">
+    <div>
+      <div style="font-weight:800">SMOU GROUP</div>
+      <div style="font-size:12px;color:var(--muted)">Silver Cabin</div>
     </div>
-
-    <!-- الكارد -->
-    <div class="card">
-      <div class="cardHead">
-        <div class="hint" id="stateHint">القائمة</div>
-
-        <div style="display:flex; gap:10px; align-items:center;">
-          <button class="btn" id="backBtn" onclick="backToList()" style="display:none;">رجوع للقائمة</button>
-          <button class="btn btnPrimary" onclick="scrollToTop()">أعلى الصفحة</button>
-        </div>
-      </div>
-
-      <!-- قائمة الأيقونات -->
-      <div class="grid" id="grid"></div>
-
-      <!-- مشغل الفيديو -->
-      <div class="playerWrap" id="playerWrap">
-        <div class="playerBox">
-          <div class="playerTop">
-            <div class="playerTitle" id="playerTitle">
-              <!-- title here -->
-              <span id="playerSub"></span>
-            </div>
-            <button class="btn" onclick="backToList()">✕ إغلاق</button>
-          </div>
-
-          <div class="iframeBox" id="iframeBox">
-            <!-- iframe injected here -->
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer">© SMOU GROUP — Silver Videos</div>
   </div>
 
-  <script>
-    /**
-     * ✅ هنا ضع جدولك (الاسم + اللينك)
-     * - name: اسم الأيقونة (يفضل نفس اسم الملف)
-     * - url : رابط يوتيوب (short/long) أو رابط embed
-     *
-     * مثال: "https://www.youtube.com/watch?v=Cow1xpKGi6M"
-     */
-    const videos = [
-      { name: "Silver Video 01", url: "https://www.youtube.com/watch?v=Cow1xpKGi6M" },
-      { name: "Silver Video 02", url: "https://youtu.be/Cow1xpKGi6M" },
-      // ✳️ أضف باقي العناصر حسب جدولك...
-    ];
+  <div class="pageTitle">
+    <h1>فيديوهات الفضي</h1>
+  </div>
 
-    // استخراج ID من أي رابط يوتيوب شائع
-    function getYouTubeId(url){
-      try{
-        const u = new URL(url);
-        // youtu.be/ID
-        if (u.hostname.includes("youtu.be")) return u.pathname.replace("/", "");
-        // youtube.com/watch?v=ID
-        if (u.searchParams.get("v")) return u.searchParams.get("v");
-        // youtube.com/embed/ID
-        const parts = u.pathname.split("/").filter(Boolean);
-        const embedIndex = parts.indexOf("embed");
-        if (embedIndex !== -1 && parts[embedIndex+1]) return parts[embedIndex+1];
-        // fallback
-        return "";
-      }catch(e){
-        return "";
-      }
-    }
+  <div class="branch">فرع الشارقة</div>
+</div>
 
-    function thumbUrlById(id){
-      // الأفضل: maxresdefault (قد لا تتوفر لبعض الفيديوهات) ثم hqdefault
-      return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-    }
+<div class="card">
 
-    const grid = document.getElementById("grid");
-    const playerWrap = document.getElementById("playerWrap");
-    const iframeBox = document.getElementById("iframeBox");
-    const backBtn = document.getElementById("backBtn");
-    const stateHint = document.getElementById("stateHint");
-    const playerTitle = document.getElementById("playerTitle");
-    const playerSub = document.getElementById("playerSub");
+<div class="grid" id="grid"></div>
 
-    function renderGrid(){
-      grid.innerHTML = "";
-      videos.forEach((v, idx) => {
-        const id = getYouTubeId(v.url);
-        const thumb = id ? thumbUrlById(id) : "";
+<div class="playerWrap" id="playerWrap">
+  <div class="playerBox">
+    <div class="playerTop">
+      <div id="videoTitle"></div>
+      <button onclick="backToList()">رجوع للقائمة</button>
+    </div>
+    <div id="iframeBox"></div>
+  </div>
+</div>
 
-        const item = document.createElement("div");
-        item.className = "videoIcon";
-        item.onclick = () => openVideo(idx);
+</div>
+</div>
 
-        item.innerHTML = `
-          <div class="playBadge" title="تشغيل"></div>
-          <img class="thumb" src="${thumb}" alt="${escapeHtml(v.name)}" onerror="this.style.opacity='.2'">
-          <div class="caption">${escapeHtml(v.name)}</div>
-          <div class="subcap">${id ? "YouTube" : "رابط غير معروف"}</div>
-        `;
-        grid.appendChild(item);
-      });
-    }
+<script>
 
-    function openVideo(index){
-      const v = videos[index];
-      const id = getYouTubeId(v.url);
+// جدول الفيديوهات
+const videos = [
+{ name:"S1", url:"https://youtube.com/shorts/H0CnBTi6YyA"},
+{ name:"S2", url:"https://youtube.com/shorts/cM_1zd_4jI0"},
+{ name:"S3", url:"https://youtube.com/shorts/1Hwx9NHEZiQ"},
+{ name:"S4", url:"https://youtube.com/shorts/Q5TbUNvmHUA"},
+{ name:"S5", url:"https://youtube.com/shorts/qThwlxQy2G8"},
+{ name:"S6", url:"https://youtube.com/shorts/b_EU2si_LcU"},
+{ name:"S7", url:"https://youtube.com/shorts/zohvGbhjd5s"},
+{ name:"S8", url:"https://youtube.com/shorts/esme6hSEmlk"},
+{ name:"S9", url:"https://youtube.com/shorts/lZHL9PNgNUw"}
+];
 
-      // عنوان المشغل
-      playerTitle.firstChild && (playerTitle.firstChild.textContent = "");
-      playerTitle.textContent = v.name;
-      playerSub.textContent = "SMOU GROUP — Silver Cabin";
+// استخراج ID من Shorts
+function getYouTubeId(url){
+  const u = new URL(url);
+  if(u.pathname.includes("/shorts/")){
+    return u.pathname.split("/shorts/")[1].split("?")[0];
+  }
+  if(u.searchParams.get("v")) return u.searchParams.get("v");
+  return "";
+}
 
-      // حقن iframe
-      if (!id){
-        iframeBox.innerHTML = `<div style="padding:18px;color:rgba(255,255,255,.85);font-weight:700">
-          الرابط غير مدعوم تلقائياً. ضع رابط يوتيوب صحيح (watch / youtu.be / embed).
-        </div>`;
-      }else{
-        iframeBox.innerHTML = `
-          <iframe
-            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-          </iframe>
-        `;
-      }
+const grid=document.getElementById("grid");
+const playerWrap=document.getElementById("playerWrap");
+const iframeBox=document.getElementById("iframeBox");
+const videoTitle=document.getElementById("videoTitle");
 
-      // تبديل العرض
-      grid.style.display = "none";
-      playerWrap.style.display = "block";
-      backBtn.style.display = "inline-flex";
-      stateHint.textContent = "مشاهدة الفيديو";
+function render(){
+  grid.innerHTML="";
+  videos.forEach((v,i)=>{
+    const id=getYouTubeId(v.url);
+    const thumb=`https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    grid.innerHTML+=`
+      <div class="videoIcon" onclick="openVideo(${i})">
+        <img src="${thumb}">
+        <div class="caption">${v.name}</div>
+      </div>`;
+  });
+}
 
-      // انزل للمشغل
-      playerWrap.scrollIntoView({behavior:"smooth", block:"start"});
-    }
+function openVideo(index){
+  const v=videos[index];
+  const id=getYouTubeId(v.url);
+  videoTitle.textContent=v.name;
+  iframeBox.innerHTML=`
+    <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
+    allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  grid.style.display="none";
+  playerWrap.style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 
-    function backToList(){
-      // إيقاف الفيديو بإزالة iframe
-      iframeBox.innerHTML = "";
-      playerWrap.style.display = "none";
-      grid.style.display = "grid";
-      backBtn.style.display = "none";
-      stateHint.textContent = "القائمة";
-      scrollToTop();
-    }
+function backToList(){
+  iframeBox.innerHTML="";
+  playerWrap.style.display="none";
+  grid.style.display="grid";
+}
 
-    function scrollToTop(){
-      window.scrollTo({top:0, behavior:"smooth"});
-    }
+render();
+</script>
 
-    function escapeHtml(str){
-      return String(str).replace(/[&<>"']/g, s => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        "\"":"&quot;",
-        "'":"&#039;"
-      }[s]));
-    }
-
-    // تشغيل
-    renderGrid();
-  </script>
 </body>
 </html>
